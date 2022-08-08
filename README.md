@@ -26,6 +26,6 @@ You can add the library to your `build.gradle.kts` for example like this:
 
 ```kotlin
 dependencies {
-    kapt("com.ewag.mapstruct.netflix.dgs.spi:mapstruct-netflix-dgs-spi:1.0")
+    kapt("com.ewag.mapstruct.netflix.dgs.spi:mapstruct-netflix-dgs-spi:1.0.0")
 }
 ```

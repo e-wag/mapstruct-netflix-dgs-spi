@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.ewag.mapstruct.netflix.dgs.spi"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -21,17 +21,30 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = project.group.toString()
-            artifactId = project.name
-            version = project.version.toString()
 
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/e-wag/mapstruct-netflix-dgs-spi")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.token") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("maven") { // For local publication
+            from(components["java"])
+        }
+
+        register<MavenPublication>("gpr") {
             from(components["java"])
         }
     }
+
 }
